@@ -78,6 +78,11 @@
       color: #fff;
       background-color: #428bca;
     }
+    .nav-sidebar > .visited > a {
+        color: #428bca;
+        background-color: #fff;
+    }
+
 
     /*
      * Main content
@@ -132,8 +137,9 @@
          <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
 
             <ul class="nav nav-sidebar">
-              <li class="active"><a href="#">Overview</a></li>
-              <li><a href="#">Reports</a></li>
+              <li class= "active"><a href="/home">Overview</a></li>
+              <!--<li><a href="reports.ftl">Reports</a></li>-->
+              <li><a href="/rep">Reports</a></li>
               <li><a href="#">Analytics</a></li>
               <li><a href="#">Export</a></li>
             </ul>
@@ -150,7 +156,7 @@
 		  <h1 class="page-header">
             Dashboard
           </h1>
-					<h5>Welcome ${user} !!</h5>
+					<h5>Welcome ${user} !!
 
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder text-center">
@@ -165,6 +171,7 @@
               <img src="http://aditirajawat.net/images/p3.png" class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail">
               <h4 id="beacons"><a href="/beacons">Beacons</a></h4>
             </div>
+
           </div>
 
           <hr>

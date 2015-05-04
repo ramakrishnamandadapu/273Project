@@ -79,9 +79,10 @@
       background-color: #428bca;
     }
     .nav-sidebar > .visited > a {
-            color: #428bca;
-            background-color: #fff;
-        }
+        color: #428bca;
+        background-color: #fff;
+    }
+
 
     /*
      * Main content
@@ -136,8 +137,9 @@
          <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
 
             <ul class="nav nav-sidebar">
-              <li class="active"><a href="/home">Overview</a></li>
-              <li><a href="/rep">Reports</a></li>
+              <li><a href="/home">Overview</a></li>
+              <!--<li class= "active"><a href="http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/">Reports</a></li>-->
+              <li class= "active"><a href="/rep">Reports</a></li>
               <li><a href="#">Analytics</a></li>
               <li><a href="#">Export</a></li>
             </ul>
@@ -152,32 +154,33 @@
           </p>
 
 		  <h1 class="page-header">
-            Dashboard
+            Reports
           </h1>
-					<h5>Welcome ${user} !!</h5>
+					<h5>Welcome ${user} !!
 
           <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder text-center">
-              <img src="http://aditirajawat.net/images/p1.png" class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail">
-              <h4 id="places"><a href="/places">Places</a></h4>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder text-center">
-              <img src="http://aditirajawat.net/images/p2.png" class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail">
-              <h4 id="geofences"><a href="/geofences">Geofences</a></h4>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder text-center">
-              <img src="http://aditirajawat.net/images/p3.png" class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail">
-              <h4 id="beacons"><a href="/beacons">Beacons</a></h4>
-            </div>
 
-           </div>
+             <div class="col-xs-6 col-sm-3 placeholder text-center ">
+             <br>
+             <br>
+
+                         <!-- <h4 id="map"><a href="http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/">Map</a></h4>-->
+                         <h4 id="map"><a href="/map">Beacon Frequency Report</a></h4>
+             </div>
+                         <div class="col-xs-6 col-sm-3 placeholder text-center ">
+                         <br>
+                         <br>
+                         <t> <h4 id="heatMap"><a href="/rep">Heat Map</a></h4></t>
+                         </div>
+
+          </div>
 
           <hr>
-
-
+          <br>
+          <br>
 					<h4 id="id1">Click on above labels to see the details</h4>
-          <h4 id="id1"><a href="/home">Go To Home</a></h4>
-          <p> ${details} </p>
+					 <h4 id="id1"><a href="/rep">Go To Report</a></h4>
+                              <p> ${details} </p>
 
       </div><!--/row-->
 	</div>
