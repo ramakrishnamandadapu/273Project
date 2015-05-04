@@ -97,6 +97,51 @@ public class AppController {
             }
         });
 
+        get(new FreemarkerBasedRoute("/graph", "graph.ftl") {
+            @Override
+            public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
+
+                SimpleHash root = new SimpleHash();
+
+                root.put("user", "Surbhi Garg");
+                template.process(root, writer);
+            }
+        });
+        get(new FreemarkerBasedRoute("/new", "newWindow.ftl") {
+            @Override
+            public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
+
+                SimpleHash root = new SimpleHash();
+
+                root.put("user", "Surbhi Garg");
+                template.process(root, writer);
+            }
+        });
+        get(new FreemarkerBasedRoute("/win", "reports.ftl") {
+            @Override
+            public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
+
+                SimpleHash root = new SimpleHash();
+
+                root.put("user", "Surbhi Garg");
+                template.process(root, writer);
+            }
+        });
+
+
+       /* get(new FreemarkerBasedRoute("/new", "newWindow.ftl") {
+            @Override
+            public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
+
+                SimpleHash root = new SimpleHash();
+
+                root.put("user", "Surbhi Garg");
+                template.process(root, writer);
+            }
+        });*/
+
+
+
         get(new FreemarkerBasedRoute("/places", "sensorDetails.ftl") {
             @Override
             public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
@@ -120,56 +165,31 @@ public class AppController {
                 template.process(root, writer);
             }
         });
-get(new FreemarkerBasedRoute("/rep", "reports.ftl") {
-    @Override
-    public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
+        get(new FreemarkerBasedRoute("/rep", "reports.ftl") {
+            @Override
+            public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
 
-        /*HttpRequestor httpReqClient = new HttpRequestor();
-        String places= "Response not retrieved";
-        String getData = "Response not retrieved";
+                /*HttpRequestor httpReqClient = new HttpRequestor();
+                String places= "Response not retrieved";
+                String getData = "Response not retrieved";
 
-        try{
-            getData = httpReqClient.sendGet("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/");
-        }catch(Exception e){
-            System.out.println("Couldn't send request to gimbal server. Error: "+e.getMessage());
-        }
+                try{
+                    getData = httpReqClient.sendGet("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/");
+                }catch(Exception e){
+                    System.out.println("Couldn't send request to gimbal server. Error: "+e.getMessage());
+                }
 
-        if(!getData.equalsIgnoreCase("Response not retrieved"))
-            places = new Utility().getFormattedMap(getData);*/
+                if(!getData.equalsIgnoreCase("Response not retrieved"))
+                    places = new Utility().getFormattedMap(getData);*/
 
-        SimpleHash root = new SimpleHash();
-        root.put("user", "Surbhi Garg");
-       // root.put("details", places);
-        template.process(root, writer);
-    }
-});
+                SimpleHash root = new SimpleHash();
+                root.put("user", "Surbhi Garg");
+                // root.put("details", places);
+                template.process(root, writer);
+            }
+        });
 
-get(new FreemarkerBasedRoute("/map", "heatMap.ftl") {
-    @Override
-    public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
-
-        HttpRequestor httpReqClient = new HttpRequestor();
-        String places= "Response not retrieved";
-        String getData = "Response not retrieved";
-
-        try{
-            getData = httpReqClient.sendGet("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/");
-        }catch(Exception e){
-            System.out.println("Couldn't send request to gimbal server. Error: "+e.getMessage());
-        }
-
-        if(!getData.equalsIgnoreCase("Response not retrieved"))
-            places = new Utility().getFormattedMap(getData);
-
-        SimpleHash root = new SimpleHash();
-        root.put("user", "Surbhi Garg");
-        root.put("details", places);
-        template.process(root, writer);
-    }
-});
-
-
-        get(new FreemarkerBasedRoute("/geofences", "sensorDetails.ftl") {
+        get(new FreemarkerBasedRoute("/map", "heatMap.ftl") {
             @Override
             public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
 
@@ -178,13 +198,37 @@ get(new FreemarkerBasedRoute("/map", "heatMap.ftl") {
                 String getData = "Response not retrieved";
 
                 try{
-                    getData = httpReqClient.sendGet("https://manager.gimbal.com/api/geofences");
+                    getData = httpReqClient.sendGet("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/");
                 }catch(Exception e){
                     System.out.println("Couldn't send request to gimbal server. Error: "+e.getMessage());
                 }
 
                 if(!getData.equalsIgnoreCase("Response not retrieved"))
-                   places = new Utility().getFormattedGeofences(getData);
+                    places = new Utility().getFormattedMap(getData);
+
+                SimpleHash root = new SimpleHash();
+                root.put("user", "Surbhi Garg");
+                root.put("details", places);
+                template.process(root, writer);
+            }
+        });
+
+        get(new FreemarkerBasedRoute("/geofences", "sensorDetails.ftl") {
+            @Override
+            public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
+
+                HttpRequestor httpReqClient = new HttpRequestor();
+                String places = "Response not retrieved";
+                String getData = "Response not retrieved";
+
+                try {
+                    getData = httpReqClient.sendGet("https://manager.gimbal.com/api/geofences");
+                } catch (Exception e) {
+                    System.out.println("Couldn't send request to gimbal server. Error: " + e.getMessage());
+                }
+
+                if (!getData.equalsIgnoreCase("Response not retrieved"))
+                    places = new Utility().getFormattedGeofences(getData);
 
                 SimpleHash root = new SimpleHash();
                 root.put("user", "Aditi Rajawat");
@@ -218,3 +262,4 @@ get(new FreemarkerBasedRoute("/map", "heatMap.ftl") {
         });
     }
 }
+

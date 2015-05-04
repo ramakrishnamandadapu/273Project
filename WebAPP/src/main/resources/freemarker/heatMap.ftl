@@ -170,7 +170,7 @@
                          <div class="col-xs-6 col-sm-3 placeholder text-center ">
                          <br>
                          <br>
-                         <t> <h4 id="heatMap"><a href="/rep">Heat Map</a></h4></t>
+                         <t> <h4 id="heatMap"><a href="/win" >Heat Map</a></h4></t>
                          </div>
 
           </div>

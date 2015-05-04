@@ -170,7 +170,13 @@
                          <div class="col-xs-6 col-sm-3 placeholder text-center ">
                          <br>
                          <br>
-                         <h4 id="heatMap"><a href="/rep">Heat Map</a></h4>
+                         <h4 id="heatMap"><a href="/win" onClick="myFunction()" >Heat Map</a></h4>
+                         <script>
+                         function myFunction() {
+                             var myWindow = window.open("file:///C:/Users/Jai/Desktop/HeatMap_Surbhi.html", "surbhi", "width=1000, height=400");
+                         }
+                         </script>
+
                          </div>
             
           </div>

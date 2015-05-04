@@ -212,5 +212,120 @@ public class Utility {
 
         return places;
     }
+    // Added By Surbhi Garg
+    public String getFormattedMap(String getData){
+        String places="";
+        String val="";
+        int i=0;
+
+        getData = getData.replace("[","");
+        getData = getData.replace("]","");
+        getData = getData.replace("{","");
+        getData = getData.replace("}","");
+        getData = getData.replace("\"","");
+        //getData = getData.replace("geofences:","");
+
+        List<String> listOfItems = new ArrayList<String>(Arrays.asList(getData.split(",")));
+
+        places += "<div class=\"table-responsive\">\n" +
+                "  <table class=\"table table-striped\">\n" +
+                "    <thead>\n" +
+                "      <tr>\n" +
+                "        <th>Id</th>\n" +
+                "        <th>MachineIdentifier</th>\n" +
+                "        <th>ProcessIdentifier</th>\n" +
+                "        <th>Counter</th>\n" +
+                "        <th>TimeSecond</th>\n" +
+                "        <th>Date</th>\n" +
+                "        <th>Time</th>\n" +
+                "        <th>Beacon</th>\n" +
+                "        <th>Time</th></th>\n" +
+                "         <th>Value</th></tr>\n" +
+
+                "    </thead>\n" +
+                "    <tbody>";
+
+        for(String str: listOfItems){
+            List<String> keyValue = new ArrayList<String>(Arrays.asList(str.split(":")));
+            i++;
+
+            if(str.contains("id:")) {
+                i = 1;
+                val = new String("");
+                places += "</td>";
+            }
+
+            if(i>=11){
+                if(i==11)
+                    places += "<td>";
+                for(String s: keyValue){
+                    if(!s.equalsIgnoreCase("value")) {
+                        val += s;
+                        val +=" ";
+                    }
+                }
+
+                if(i%2 !=0) {
+                    places += val;
+                    places += "<br>";
+                }
+            }
+            else {
+                switch (i) {
+                    case 1:
+                        places += "<tr>";
+                        places += "<td>";
+                        if(keyValue.size()==2)
+                            places += keyValue.get(1);
+                        else
+                            places += "null";
+                        places += "</td>";
+                        break;
+
+                   /* case 6:
+                        if (keyValue.get(0).equalsIgnoreCase("geoFenceCircle")) {
+                            places += "<td> Circle </td>";
+                            places += "<td>";
+                            if(keyValue.size()==3)
+                                places += keyValue.get(2);
+                            else
+                                places += "null";
+                            places += "</td>";
+                        } else if (keyValue.get(0).equalsIgnoreCase("geoFencePolygon")) {
+                            places += "<td> Polygon </td>";
+                            places += "<td> NA </td>";
+                        }
+                        break;*/
+
+                    case 10:
+                        places += "<td>";
+                        if(keyValue.size()==2)
+                            places += keyValue.get(1);
+                        else
+                            places += "null";
+                        places += "</td>";
+                        places += "</tr>";
+                        break;
+
+                    default:
+                        places += "<td>";
+                        if(keyValue.size()==2)
+                            places += keyValue.get(1);
+                        else
+                            places += "null";
+                        places += "</td>";
+
+                }
+            }
+        }
+
+        places += "</tbody>\n" +
+                "  </table>\n" +
+                "</div>";
+
+        return places;
+    }
+
 
 }
+

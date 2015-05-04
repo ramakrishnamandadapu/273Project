@@ -61,6 +61,9 @@
     <tr>
       <td class="div2"><a href="/beacons">Beacons</a></td>
     </tr>
+    <tr>
+        <td class="div2"><a href="/map">Map</a></td>
+    </tr>
   </table>
 </div>
 
