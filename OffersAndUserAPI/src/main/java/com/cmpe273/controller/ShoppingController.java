@@ -37,8 +37,14 @@ public class ShoppingController {
 	}
 	
 	@RequestMapping(value="/postoffer",method = RequestMethod.POST)
-	public void getOffers(@RequestBody Offer offer){
+	public void postOffers(@RequestBody Offer offer){
          offersDAO.postOffer(offer);
+        
+	}
+	
+	@RequestMapping(value="/removeoffer",method = RequestMethod.POST)
+	public void removeOffers(@RequestBody Offer offer){
+        // offersDAO.postOffer(offer);
         
 	}
 
