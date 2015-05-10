@@ -5,49 +5,61 @@ import org.springframework.data.annotation.Id;
 public class HeatMapData {
 	@Id
 	private Integer geoLocId;
-	private String beacon;
-	private String time;
-	private String noOfHits;
+	private String beaconId;
+	private String createdAt;
+	private String leaveAt;
+	private String noOfSightings;
 	
 	public HeatMapData()
 	{
 		
 	}
-	public HeatMapData(String beaconId, String time, String noOfHits)
+	public HeatMapData(String beaconId, String created_at, String leave_at, String noOfHits)
 	{
 		super();
-		this.beacon = beaconId;
-		this.time = time;
-		this.noOfHits = noOfHits;
+		this.beaconId = beaconId;
+		this.createdAt = created_at;
+		this.leaveAt = leave_at;
+		this.noOfSightings = noOfHits;
 	}
-	public String getBeacon()
+	public String getBeaconId()
 	{
-		return beacon;
+		return beaconId;
 	}
 
-	public String getTime()
+	public String getCreatedAt()
 	{
-		return time;
+		return createdAt;
 	}
 	
-	public String getNoOfHits()
+	public String getLeaveAt()
 	{
-		return noOfHits;
+		return leaveAt;
 	}
 	
-	public void setBeacon(String beacon)
+	public String getNoOfSightings()
 	{
-		this.beacon = beacon;
+		return noOfSightings;
 	}
 	
-	public void setTime(String time)
+	public void setBeaconId(String beacon)
 	{
-		this.time = time;
+		this.beaconId = beacon;
 	}
 	
-	public void setNoOfHits(String noOfHits)
+	public void setCreatedAt(String time)
 	{
-		this.noOfHits = noOfHits;
+		this.createdAt = time;
+	}
+	
+	public void setLeaveAt(String time)
+	{
+		this.leaveAt = time;
+	}
+	
+	public void setNoOfSightings(String noOfHits)
+	{
+		this.noOfSightings = noOfHits;
 	}
 	
 	public Integer getIdentity() 

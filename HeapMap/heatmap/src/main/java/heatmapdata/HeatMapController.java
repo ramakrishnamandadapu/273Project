@@ -2,9 +2,11 @@ package heatmapdata;
 
 import heatmapdata.HeatMapData;
 import heatmapdata.HeatMapDAO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -32,8 +34,6 @@ import javax.validation.Valid;
 
 import com.mongodb.*;
 
-
-
 import java.net.UnknownHostException;
 
 import com.mongodb.ParallelScanOptions; 
@@ -41,7 +41,10 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
 import org.bson.Document;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @RestController
 @RequestMapping("/heatmap")
@@ -51,15 +54,13 @@ public class HeatMapController {
 	private HeatMapDAO heatMapDAO;
 	
 	public HeatMapController() {
-		final MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://karan:karan345@ds053429.mongolab.com:53429/heatmapdata273"));
-        final MongoDatabase heatMapDatabase = mongoClient.getDatabase("heatmapdata273");
+		final MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://karan:karan345@ds037067.mongolab.com:37067/heatmap273cmpe"));
+        final MongoDatabase heatMapDatabase = mongoClient.getDatabase("heatmap273cmpe");
         heatMapDAO=new HeatMapDAO(heatMapDatabase);
 		along = new AtomicLong(123456);
 	}
 	
-
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/listall", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<FindIterable<Document>> getHeatMaps() {
 		
@@ -67,11 +68,37 @@ public class HeatMapController {
 		
 	}
 
-//	@RequestMapping(method=RequestMethod.POST)
-//	public HeatMapData create(@RequestBody HeatMapData data) {
-//	    return repo.save(data);
-//	  }
-//	
+	@RequestMapping(value = "/creategeoloc", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<HeatMapData> createGeoLocId( @RequestBody HeatMapData hmd) 
+	{
+		hmd.setIdentity((int) along.incrementAndGet());
+		hmd.setCreatedAt(new Date().toString());
+		heatMapDAO.save(hmd);
+		return new ResponseEntity<HeatMapData>(hmd, HttpStatus.CREATED);
+		
+	}
 
+	@RequestMapping(value = "/geoloc/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<HeatMapData> getHeatMap(@PathVariable int id) 
+	{
+					return new ResponseEntity<HeatMapData>(heatMapDAO.getHeatMapData(id),HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/geoloc/{id}", method = RequestMethod.PUT, produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Object> updateHeatMap( @PathVariable int id, @RequestBody HeatMapData hmd) {
+		hmd.setIdentity(id);
+		heatMapDAO.updateHeatMapData(hmd);
+		return new ResponseEntity<Object>(heatMapDAO.getHeatMapData(id),HttpStatus.OK) ;
+	}
+	
+	@RequestMapping(value = "/geoloc/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Object> deleteHeatMap(@NotBlank @PathVariable int id){
+			heatMapDAO.deleteGeoLocId(id);
+			return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
+	}
 }
 
