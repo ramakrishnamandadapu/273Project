@@ -127,7 +127,7 @@ public class MainActivity extends ActionBarActivity {
 
                 int absoluteRSSI=Math.abs(sighting.getRSSI());
                 if(!isToasted)
-                    new HttpRequestTask().doInBackground("1",String.valueOf(absoluteRSSI));
+                    new HttpRequestTask().doInBackground("RS34A",String.valueOf(absoluteRSSI));
 
             }
         };
@@ -174,20 +174,25 @@ public class MainActivity extends ActionBarActivity {
             Promotion promo=new Promotion();
             try {
 
-                final String url = "http://54.183.246.193:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1];
+                final String url = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
                 Log.i("SIGHTING", url.toString());
                 RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                //restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-                Promotion prom=restTemplate.getForObject(url, Promotion.class);
-                List<String> offers=prom.getOffers();
+                Promotion[] promArr=restTemplate.getForObject(url, Promotion[].class);
+
                 TextView txtCommunication=(TextView) findViewById(R.id.txtCommunication);
                 String offer="";
-                for(String value:offers)
+                for(Promotion promotion:promArr)
                 {
-                    Log.i("PROMOTION RECEIVED", value.toString());
-                    offer+=value +"\n";
+                    List<String> offers=promotion.getOffers();
+                    for(String strOffer:offers)
+                    {
+                        Log.i("PROMOTION RECEIVED", strOffer);
+                        offer+=strOffer +"\n";
+                    }
+
                 }
                 txtCommunication.setText(offer);
                 Toast toast = Toast.makeText(getApplicationContext(), "OFFER AVAILABLE!", Toast.LENGTH_SHORT);
