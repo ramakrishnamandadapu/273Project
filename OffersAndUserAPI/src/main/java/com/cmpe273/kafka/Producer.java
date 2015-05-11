@@ -11,10 +11,13 @@ public class Producer extends Thread
     private final Properties props = new Properties();
     private static int messageCount = 0;
 
+    public static void main(String[] args) {
+		new Producer("test").sendMessage("testtopic");
+	}
     public Producer(String topic)
     {
         props.put("serializer.class", "kafka.serializer.StringEncoder");
-        props.put("metadata.broker.list", "54.149.84.25:9092");
+        props.put("metadata.broker.list", "localhost:9092");
         // Use random partitioner. Don't need the key type. Just set it to Integer.
         // The message is of type String.
         producer = new kafka.javaapi.producer.Producer<Integer, String>(new ProducerConfig(props));

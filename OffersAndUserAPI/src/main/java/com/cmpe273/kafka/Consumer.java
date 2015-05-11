@@ -43,4 +43,8 @@ public class Consumer extends Thread {
         while(it.hasNext())
             System.out.println("Received Msg: "+new String(it.next().message()));
     }
+    
+    public static void main(String[] args) {
+		new Consumer("test").run();
+	}
 }
