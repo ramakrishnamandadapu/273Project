@@ -97,7 +97,7 @@ public class AppController {
 
 
 
-        get(new FreemarkerBasedRoute("/surbhi", "graph.ftl") {
+        get(new FreemarkerBasedRoute("/graph", "graph.ftl") {
             @Override
             public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
 

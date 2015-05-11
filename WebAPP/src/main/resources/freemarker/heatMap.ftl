@@ -173,7 +173,7 @@
 
 
                      <!--    <t> <h4 id="heatMap"><a href="/win" >Heat Map</a></h4></t>-->
-                         <h4 id="heatMap"><a href="/surbhi" >Heat Map</a></h4>
+                         <h4 id="heatMap"><a href="/graph" >Heat Map</a></h4>
                          </div>
 
           </div>
@@ -213,3 +213,4 @@
     </script>
 	</body>
 </html>
+

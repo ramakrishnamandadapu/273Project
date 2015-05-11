@@ -10,3 +10,4 @@ public class HeatmapApplication {
         SpringApplication.run(HeatmapApplication.class, args);
     }
 }
+

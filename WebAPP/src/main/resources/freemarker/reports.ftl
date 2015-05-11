@@ -170,7 +170,7 @@
                          <div class="col-xs-6 col-sm-3 placeholder text-center ">
                          <br>
                          <br>
-                         <h4 id="heatMap"><a href="/surbhi" >Heat Map</a></h4>
+                         <h4 id="heatMap"><a href="/graph" >Heat Map</a></h4>
                         <!-- <h4 id="heatMap"><a href="/win" onClick="myFunction()" >Heat Map</a></h4>-->
                         <!-- <script>-->
                          <!--function myFunction() {-->
@@ -218,3 +218,4 @@
     </script>
 	</body>
 </html>
+
