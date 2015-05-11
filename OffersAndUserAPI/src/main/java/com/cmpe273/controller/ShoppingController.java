@@ -23,22 +23,19 @@ import com.cmpe273.model.User;
 @RestController
 @RequestMapping("/theshop/api/v1")
 public class ShoppingController {
-	
-    private static DatabaseConnection dbConnection = new DatabaseConnection();
+    
     @Autowired
     private OffersDAO offersDAO;
-
     @Autowired
     private UserDAO userDAO;
-   
     @Autowired
     private KafkaProducer producer;
-
+    
+    private static DatabaseConnection dbConnection = new DatabaseConnection();
     static{
         dbConnection.setDbConnection();
         
     }
-    
     
 	@RequestMapping(value="/getoffers/beaconid/{beaconId}/rss/{rss}",method = RequestMethod.GET)
 	public List<Document> getOffers(@PathVariable String beaconId,@PathVariable int rss,@RequestParam("uid") String userId){
@@ -54,13 +51,13 @@ public class ShoppingController {
 	
 	@RequestMapping(value="/removeoffer",method = RequestMethod.DELETE)
 	public void removeOffers(@RequestBody Offer offer){
-        // offersDAO.postOffer(offer);
+         offersDAO.removeOffer(offer);
         
 	}
 	
 	@RequestMapping(value="/getalloffers",method = RequestMethod.GET)
-	public void getAllOffers(){
-        // offersDAO.postOffer(offer);
+	public List<Document> getAllOffers(){
+         return offersDAO.getAllOffers();
         
 	}
 

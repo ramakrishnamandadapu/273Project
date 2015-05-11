@@ -41,7 +41,22 @@ public class OffersDAO {
     	userDetails.append("beaconId",beaconId);
     	userDetails.append("RSSmin", new Document("$lte",rss));
     	userDetails.append("RSSmax", new Document("$gt",rss));
-    	System.out.println(userDetails);
+        return this.offersCollection.find(userDetails).into(new ArrayList<Document>());
+    }
+    
+    public void removeOffer(Offer offer){
+    	this.offersCollection = dbConnection.getCollection("offers");
+    	Document offerDocument=new Document();
+    	offerDocument.append("beaconId", offer.getBeaconId());
+    	offerDocument.append("RSSmin", offer.getRssMin());
+    	offerDocument.append("RSSmax", offer.getRssMax());
+    	offerDocument.append("category", offer.getCategory());
+     	offersCollection.deleteOne(offerDocument);
+    }
+    
+    public List<Document> getAllOffers(){
+    	this.offersCollection = dbConnection.getCollection("offers");
+    	Document userDetails=new Document();
         return this.offersCollection.find(userDetails).into(new ArrayList<Document>());
     }
     
@@ -56,3 +71,4 @@ public class OffersDAO {
     }
 
 }
+
