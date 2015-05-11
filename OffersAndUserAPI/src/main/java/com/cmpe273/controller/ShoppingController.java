@@ -15,27 +15,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cmpe273.dao.OffersDAO;
 import com.cmpe273.dao.UserDAO;
 import com.cmpe273.database.DatabaseConnection;
+import com.cmpe273.kafka.KafkaProducer;
 import com.cmpe273.model.MailRequest;
 import com.cmpe273.model.Offer;
 import com.cmpe273.model.User;
-import com.mongodb.client.MongoCollection;
 
 @RestController
 @RequestMapping("/theshop/api/v1")
 public class ShoppingController {
+	
     private static DatabaseConnection dbConnection = new DatabaseConnection();
-    public MongoCollection<Document> offersCollection;
-    public MongoCollection<Document> usersCollection;
+    @Autowired
+    private OffersDAO offersDAO;
 
     @Autowired
-    public OffersDAO offersDAO;
-
+    private UserDAO userDAO;
+   
     @Autowired
-    public UserDAO userDAO;
+    private KafkaProducer producer;
 
     static{
         dbConnection.setDbConnection();
-        // new ScheduledTasks();
+        
     }
     
     
@@ -79,9 +80,9 @@ public class ShoppingController {
         userDAO.updateUser(user, userId);
     }
     
-    @RequestMapping(value="/sendmail/mailid/{mailid}/offers/{offers}",method = RequestMethod.POST)
+    @RequestMapping(value="/sendmail",method = RequestMethod.POST)
 	public void sendMail(@RequestBody MailRequest mailRequest){
-        
+    	producer.sendMessage(mailRequest);
 	}
 }
 

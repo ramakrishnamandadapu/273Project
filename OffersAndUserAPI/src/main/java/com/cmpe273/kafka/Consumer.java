@@ -5,20 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 
-public class Consumer extends Thread {
+public class Consumer  {
     private final ConsumerConnector consumer;
     private final String topic;
 
-    public Consumer(String topic)
+    public Consumer()
     {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
                 createConsumerConfig());
-        this.topic = topic;
+        this.topic = "test";
     }
 
     private static ConsumerConfig createConsumerConfig()
@@ -34,7 +35,7 @@ public class Consumer extends Thread {
 
     }
 
-    public void run() {
+    public void receive() {
         Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
         topicCountMap.put(topic, new Integer(1));
         Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumer.createMessageStreams(topicCountMap);
@@ -44,7 +45,5 @@ public class Consumer extends Thread {
             System.out.println("Received Msg: "+new String(it.next().message()));
     }
     
-    public static void main(String[] args) {
-		new Consumer("test").run();
-	}
+   
 }
