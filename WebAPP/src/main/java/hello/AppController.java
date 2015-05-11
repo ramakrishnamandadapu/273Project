@@ -17,9 +17,7 @@ import java.io.Writer;
 import static spark.Spark.get;
 import static spark.Spark.setPort;
 
-/**
- * Created by aditi on 17/04/15.
- */
+
 public class AppController {
 
     private final Configuration cfg;
@@ -97,7 +95,9 @@ public class AppController {
             }
         });
 
-        get(new FreemarkerBasedRoute("/graph", "graph.ftl") {
+
+
+        get(new FreemarkerBasedRoute("/surbhi", "graph.ftl") {
             @Override
             public void doHandle(Request request, Response response, Writer writer) throws IOException, TemplateException {
 
