@@ -11,9 +11,9 @@ public class Offer {
 	@JsonProperty("beaconId")
 	private String beaconId;
 	@JsonProperty("RSSmin")
-	private String rssMin;
+	private int rssMin;
 	@JsonProperty("RSSmax")
-	private String rssMax;
+	private int rssMax;
 	@JsonProperty("category")
 	private String category;
 	@JsonProperty("offers")
@@ -25,16 +25,16 @@ public class Offer {
 	public void setBeaconId(String beaconId) {
 		this.beaconId = beaconId;
 	}
-	public String getRssMin() {
+	public int getRssMin() {
 		return rssMin;
 	}
-	public void setRssMin(String rssMin) {
+	public void setRssMin(int rssMin) {
 		this.rssMin = rssMin;
 	}
-	public String getRssMax() {
+	public int getRssMax() {
 		return rssMax;
 	}
-	public void setRssMax(String rssMax) {
+	public void setRssMax(int rssMax) {
 		this.rssMax = rssMax;
 	}
 	public String getCategory() {

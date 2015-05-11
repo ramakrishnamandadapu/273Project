@@ -37,7 +37,7 @@ public class ShoppingController {
         // new ScheduledTasks();
     }
 	@RequestMapping(value="/getoffers/beaconid/{beaconId}/rss/{rss}",method = RequestMethod.GET)
-	public List<Document> getOffers(@PathVariable String beaconId,@PathVariable String rss,@RequestParam("uid") String userId){
+	public List<Document> getOffers(@PathVariable String beaconId,@PathVariable int rss,@RequestParam("uid") String userId){
         return offersDAO.getOffers(beaconId,rss,userId);
         
 	}

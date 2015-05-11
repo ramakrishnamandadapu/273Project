@@ -34,7 +34,7 @@ public class OffersDAO {
     	offerDocument.append("offers", offer.getOffers());
      	offersCollection.insertOne(offerDocument);
     }
-    public List<Document> getOffers(String beaconId, String rss,String userId){
+    public List<Document> getOffers(String beaconId, int rss,String userId){
     	this.offersCollection = dbConnection.getCollection("offers");
     	List<String> userDisintrests=getUserDisintrests(userId);
     	Document userDetails=new Document("category",new Document("$not", new Document("$in",userDisintrests)));

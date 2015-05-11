@@ -32,7 +32,9 @@ repositories {
  
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE")
+	compile("org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter")
+ 	compile("org.apache.kafka:kafka_2.10:0.8.2.1") 
     compile("org.mongodb:mongodb-driver:3.0.0-beta3")
  
 }
