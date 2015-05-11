@@ -36,8 +36,17 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter")
  	compile("org.apache.kafka:kafka_2.10:0.8.2.1") 
     compile("org.mongodb:mongodb-driver:3.0.0-beta3")
+    compile("javax.mail:mail:1.4")
  
 }
+configurations {
+   all*.exclude group: 'javax.jms', module: 'jms'
+   all*.exclude group: 'com.sun.jdmk', module: 'jmxtools'
+   all*.exclude group: 'com.sun.jmx', module: 'jmxri'
+   all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+   published
+}
+
 configurations {
    all*.exclude group: 'javax.jms', module: 'jms'
    all*.exclude group: 'com.sun.jdmk', module: 'jmxtools'

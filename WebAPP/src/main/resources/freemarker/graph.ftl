@@ -37,17 +37,17 @@
             colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
             beacons = ["B1", "B2", "B3", "B4", "B5", "B6", "B7"],
             times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
+			
 
-
-
+			
 d3.json("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/",
 
-
+	
 	function(error, data) {
 	data.forEach(function(d) {
 	console.log(d);
 	});
-
+	
 	 var colorScale = d3.scale.quantile()
                         .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
                         .range(colors);
@@ -81,8 +81,8 @@ d3.json("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/",
                 var heatMap = svg.selectAll(".time")
                         .data(data)
                         .enter().append("rect")
-                        .attr("x", function(d) { return (d.time - 1) * gridSize; })
-                        .attr("y", function(d) { return (d.beacon - 1) * gridSize; })
+                        .attr("x", function(d) { return (d.noOfSightings - 1) * gridSize; })
+                        .attr("y", function(d) { return (d.beaconId - 1) * gridSize; })
                         .attr("rx", 4)
                         .attr("ry", 4)
                         .attr("class", "time bordered")
@@ -115,7 +115,7 @@ d3.json("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/",
 }
 );
 
-
+    
 </script>
 </body>
 </html>

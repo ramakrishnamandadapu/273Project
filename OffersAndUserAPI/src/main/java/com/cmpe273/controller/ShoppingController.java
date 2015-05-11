@@ -3,7 +3,6 @@ package com.cmpe273.controller;
 
 import java.util.List;
 
-import com.cmpe273.model.User;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,26 +15,31 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cmpe273.dao.OffersDAO;
 import com.cmpe273.dao.UserDAO;
 import com.cmpe273.database.DatabaseConnection;
+import com.cmpe273.kafka.KafkaProducer;
+import com.cmpe273.model.MailRequest;
 import com.cmpe273.model.Offer;
-import com.mongodb.client.MongoCollection;
+import com.cmpe273.model.User;
 
 @RestController
 @RequestMapping("/theshop/api/v1")
 public class ShoppingController {
+	
     private static DatabaseConnection dbConnection = new DatabaseConnection();
-    public MongoCollection<Document> offersCollection;
-    public MongoCollection<Document> usersCollection;
+    @Autowired
+    private OffersDAO offersDAO;
 
     @Autowired
-    public OffersDAO offersDAO;
-
+    private UserDAO userDAO;
+   
     @Autowired
-    public UserDAO userDAO;
+    private KafkaProducer producer;
 
     static{
         dbConnection.setDbConnection();
-        // new ScheduledTasks();
+        
     }
+    
+    
 	@RequestMapping(value="/getoffers/beaconid/{beaconId}/rss/{rss}",method = RequestMethod.GET)
 	public List<Document> getOffers(@PathVariable String beaconId,@PathVariable int rss,@RequestParam("uid") String userId){
         return offersDAO.getOffers(beaconId,rss,userId);
@@ -48,8 +52,14 @@ public class ShoppingController {
         
 	}
 	
-	@RequestMapping(value="/removeoffer",method = RequestMethod.POST)
+	@RequestMapping(value="/removeoffer",method = RequestMethod.DELETE)
 	public void removeOffers(@RequestBody Offer offer){
+        // offersDAO.postOffer(offer);
+        
+	}
+	
+	@RequestMapping(value="/getalloffers",method = RequestMethod.GET)
+	public void getAllOffers(){
         // offersDAO.postOffer(offer);
         
 	}
@@ -69,5 +79,10 @@ public class ShoppingController {
     public void updateUsers(@PathVariable String userId, @RequestBody User user){
         userDAO.updateUser(user, userId);
     }
+    
+    @RequestMapping(value="/sendmail",method = RequestMethod.POST)
+	public void sendMail(@RequestBody MailRequest mailRequest){
+    	producer.sendMessage(mailRequest);
+	}
 }
 

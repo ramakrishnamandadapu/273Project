@@ -10,7 +10,7 @@
 <h4 id="new"><a href="/new" onClick="myFunction()">New</a></h4>
 <script>
 function myFunction() {
-    var myWindow = window.open("", "", "width=200, height=100");
+    var myWindow = window.open("heatMap.html", "", "width=200, height=100");
 }
 </script>
 
