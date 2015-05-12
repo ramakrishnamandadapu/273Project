@@ -44,6 +44,21 @@
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".MyPreferences"
+            android:label="@string/title_activity_my_preferences"
+            android:parentActivityName=".MainActivity" >
+
+          <!--  <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.brengarajulu.gimbaltrackerv3.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

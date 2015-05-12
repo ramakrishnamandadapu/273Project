@@ -11,6 +11,7 @@ import com.gimbal.android.PlaceManager;
 import com.gimbal.android.PlaceEventListener;
 import com.gimbal.android.Place;
 import com.gimbal.android.Visit;
+import android.view.View;
 
 import com.gimbal.android.CommunicationManager;
 import com.gimbal.android.CommunicationListener;
@@ -23,6 +24,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +32,16 @@ import com.gimbal.android.BeaconEventListener;
 import com.gimbal.android.BeaconManager;
 import com.gimbal.android.BeaconSighting;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-
+import android.view.View.OnClickListener;
+import android.content.Intent;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -44,6 +50,10 @@ public class MainActivity extends ActionBarActivity {
     private BeaconEventListener beaconSightingListener;
     private BeaconManager beaconManager;
     private boolean isToasted=false;
+    ImageButton imgPreference;
+    //final String getPromotionsUrl = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
+    final String geoLocationUrl = "http://52.11.168.245:9000/heatmap/creategeoloc";
+    //final String url = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +63,9 @@ public class MainActivity extends ActionBarActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-       // Gimbal.resetApplicationInstanceIdentifier();
+        addListenerOnButton();
+        // Gimbal.resetApplicationInstanceIdentifier();
         isToasted=false;
-
         placeEventListener = new PlaceEventListener() {
             @Override
             public void onVisitStart(Visit visit) {
@@ -129,6 +139,7 @@ public class MainActivity extends ActionBarActivity {
                 if(!isToasted)
                     new HttpRequestTask().doInBackground("RS34A",String.valueOf(absoluteRSSI));
 
+                 //new HttpRequestTask().postGeoLocationSighting("RS34A",String.valueOf(absoluteRSSI));
             }
         };
         beaconManager = new BeaconManager();
@@ -137,6 +148,23 @@ public class MainActivity extends ActionBarActivity {
         PlaceManager.getInstance().startMonitoring();
         beaconManager.startListening();
         CommunicationManager.getInstance().startReceivingCommunications();
+    }
+
+    public void addListenerOnButton() {
+
+        imgPreference = (ImageButton) findViewById(R.id.imgPreference);
+
+        imgPreference.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent( MainActivity.this, MyPreferences.class);
+                startActivity(i);
+
+            }
+
+        });
+
     }
 
    /* private String GetPromotion()
@@ -171,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
     private class HttpRequestTask extends AsyncTask<String, Integer, Promotion> {
         @Override
         protected Promotion doInBackground(String...args) {
-            Promotion promo=new Promotion();
+            //Promotion promo=new Promotion();
             try {
 
                 final String url = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
@@ -197,18 +225,53 @@ public class MainActivity extends ActionBarActivity {
                 txtCommunication.setText(offer);
                 Toast toast = Toast.makeText(getApplicationContext(), "OFFER AVAILABLE!", Toast.LENGTH_SHORT);
                 //toast.show();
-
+                postGeoLocationSighting(args[0],args[1]);
                 isToasted=false;
+
                 //toast.show();
 
 
             } catch (Exception e) {
                 Log.e("MainActivity", e.getMessage(), e);
             }
-            return promo;
+            return null;
         }
+
+        protected void postGeoLocationSighting(String...args) {
+            Promotion promo=new Promotion();
+            try {
+
+                PostGeoLocation(args[0],args[1]);
+
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+
+        }
+
     }
 
+    private void PostGeoLocation(String beaconId, String rssValue)
+    {
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        HeatMapData mapData=new HeatMapData();
+        mapData.setBeaconId(beaconId);
+        mapData.setNoOfSightings("1");
+        //requestHeaders.setContentType(new MediaType("application","json"));
+        HttpEntity<HeatMapData> requestEntity = new HttpEntity<HeatMapData>(mapData, requestHeaders);
+
+        // Create a new RestTemplate instance
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Add the Jackson and String message converters
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+        // Make the HTTP POST request, marshaling the request to JSON, and the response to a String
+        restTemplate.exchange(geoLocationUrl, HttpMethod.POST, requestEntity,null);
+        // restTemplate.postForObject(geoLocationUrl, mapData, HeatMapData.class);
+    }
 
         @Override
     public boolean onOptionsItemSelected(MenuItem item) {
