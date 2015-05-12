@@ -49,6 +49,12 @@ public class ShoppingController {
         
 	}
 	
+	@RequestMapping(value="/updateoffer",method = RequestMethod.PUT)
+	public void updateOffer(@RequestBody Offer offer){
+         offersDAO.updateOffer(offer);
+        
+	}
+	
 	@RequestMapping(value="/removeoffer",method = RequestMethod.DELETE)
 	public void removeOffers(@RequestBody Offer offer){
          offersDAO.removeOffer(offer);

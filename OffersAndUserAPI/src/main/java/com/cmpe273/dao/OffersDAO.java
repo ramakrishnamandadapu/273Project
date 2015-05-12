@@ -34,6 +34,18 @@ public class OffersDAO {
     	offerDocument.append("offers", offer.getOffers());
      	offersCollection.insertOne(offerDocument);
     }
+    
+    public void updateOffer(Offer offer){
+    	this.offersCollection = dbConnection.getCollection("offers");
+    	Document offerDocument=new Document();
+    	offerDocument.append("beaconId", offer.getBeaconId());
+    	offerDocument.append("RSSmin", offer.getRssMin());
+    	offerDocument.append("RSSmax", offer.getRssMax());
+    	offerDocument.append("category", offer.getCategory());
+    	offersCollection.deleteOne(offerDocument);
+    	offerDocument.append("offers", offer.getOffers());
+     	offersCollection.insertOne(offerDocument);
+    }
     public List<Document> getOffers(String beaconId, int rss,String userId){
     	this.offersCollection = dbConnection.getCollection("offers");
     	List<String> userDisintrests=getUserDisintrests(userId);
