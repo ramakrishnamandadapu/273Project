@@ -30,20 +30,14 @@
 <script type="text/javascript">
     var margin = { top: 50, right: 0, bottom: 100, left: 30 },
             width = 960 - margin.left - margin.right,
-            height = 2430 - margin.top - margin.bottom,
+            height = 430 - margin.top - margin.bottom,
             gridSize = Math.floor(width / 24),
             legendElementWidth = gridSize*2,
             buckets = 9,
             colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
-            beacons = ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8","B9", "B10",
-		 "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20",
-                 "B21", "B22", "B23", "B24", "B25", "B26", "B27", "B28", "B29", "B30",
-		 "B31", "B32", "B33", "B34", "B35", "B36", "B37", "B38", "B39", "B40",
-		 "B41", "B42", "B43", "B44", "B45", "B46", "B47", "B48", "B49", "B50",
-		 "B51", "B52", "B53", "B54", "B55", "B56", "B57", "B58", "B59", "B60" ],
-          times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
-	      //times = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"];
-					
+            beacons = ["B1", "B2", "B3", "B4", "B5", "B6", "B7"],
+            times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
+			
 
 			
 d3.json("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/",
@@ -55,10 +49,9 @@ d3.json("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/",
 	});
 	
 	 var colorScale = d3.scale.quantile()
-                        //.domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
-			.domain([0, buckets - 1, d3.max(data, function (d) { return d.noOfSightings; })])
+                        .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
                         .range(colors);
-                        
+
            var svg = d3.select("#chart").append("svg")
                         .attr("width", width + margin.left + margin.right)
                         .attr("height", height + margin.top + margin.bottom)
@@ -88,16 +81,8 @@ d3.json("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/",
                 var heatMap = svg.selectAll(".time")
                         .data(data)
                         .enter().append("rect")
-                        //.attr("x", function(d) { return (d.leaveAt - 1) * gridSize; })
-						.attr("x", function(d) {
-						var da=new Date(d.createdAt);
-						console.log(da.getUTCHours());
-						return (da.getUTCHours() - 1) * gridSize;
-						}
-						)
+                        .attr("x", function(d) { return (d.noOfSightings - 1) * gridSize; })
                         .attr("y", function(d) { return (d.beaconId - 1) * gridSize; })
-
-
                         .attr("rx", 4)
                         .attr("ry", 4)
                         .attr("class", "time bordered")
@@ -106,9 +91,9 @@ d3.json("http://ec2-52-8-32-159.us-west-1.compute.amazonaws.com:8080/heatmap/",
                         .style("fill", colors[0]);
 
                 heatMap.transition().duration(1000)
-                        .style("fill", function(d) { return colorScale(d.noOfSightings); });
+                        .style("fill", function(d) { return colorScale(d.value); });
 
-                heatMap.append("title").text(function(d) { return d.noOfSightings; });
+                heatMap.append("title").text(function(d) { return d.value; });
 
                 var legend = svg.selectAll(".legend")
                         .data([0].concat(colorScale.quantiles()), function(d) { return d; })
