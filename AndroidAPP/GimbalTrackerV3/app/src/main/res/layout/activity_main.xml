@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  INTELLICART  "
+            android:text="  YOUR INTELLICART  "
             android:id="@+id/textView"
             android:height="30dp"
             android:textAlignment="center"
@@ -52,7 +52,8 @@
 
 
             <TextView android:id="@+id/txtplace"  android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="WELCOME TO SJSU"
+                android:layout_height="wrap_content" android:text="WELCOME TO INTELLIMART"
+                android:textSize="20dp"
                 android:textColor="@android:color/black" />
 
             <TextView android:id="@+id/txtVisitTime"  android:layout_width="wrap_content"
@@ -60,14 +61,16 @@
                 android:textColor="@android:color/black" />
 
             <TextView android:id="@+id/txtbeacon" android:text="Beacon status: " android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginTop="10dp"
-                android:textColor="@android:color/black" />
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="17dp" />
 
             <TextView
                 android:layout_width="391dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text=""
+                android:layout_marginTop="5dp"
                 android:id="@+id/txtCommunication"
                 android:layout_weight="0.35"
                 android:background="@android:color/white"
@@ -97,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="test@gmail.com"
+                android:text="rbalaji.net@gmail.com"
                 android:ems="10"
                 android:id="@+id/txtEmail"
                 android:editable="true" />

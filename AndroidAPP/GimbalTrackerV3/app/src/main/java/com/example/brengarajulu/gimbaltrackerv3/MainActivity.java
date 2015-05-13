@@ -53,11 +53,12 @@ public class MainActivity extends ActionBarActivity {
     private BeaconEventListener beaconSightingListener;
     private BeaconManager beaconManager;
     private boolean isToasted=false;
+    private boolean isPromotionPosted=false;
     ImageButton imgPreference;
     Button btnShare;
     //final String getPromotionsUrl = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
     final String geoLocationUrl = "http://52.11.168.245:9000/heatmap/creategeoloc";
-    final String sendEmailUrl="http://52.8.99.113:8080/theshop/api/v1/sendmail";
+    final String sendEmailUrl="http://52.8.79.0:8080/theshop/api/v1/sendmail";
     //final String url = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
 
     @Override
@@ -145,7 +146,7 @@ public class MainActivity extends ActionBarActivity {
                 if(!isToasted)
                     new HttpRequestTask().doInBackground("RS34A",String.valueOf(absoluteRSSI));
 
-                 //new HttpRequestTask().postGeoLocationSighting("RS34A",String.valueOf(absoluteRSSI));
+
             }
         };
         beaconManager = new BeaconManager();
@@ -253,7 +254,7 @@ public class MainActivity extends ActionBarActivity {
             //Promotion promo=new Promotion();
             try {
 
-                final String url = "http://52.8.99.113:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
+                final String url = "http://52.8.79.0:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
                 Log.i("SIGHTING", url.toString());
                 RestTemplate restTemplate = new RestTemplate();
                 //restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
@@ -276,8 +277,12 @@ public class MainActivity extends ActionBarActivity {
                 txtCommunication.setText(offer);
                 Toast toast = Toast.makeText(getApplicationContext(), "OFFER AVAILABLE!", Toast.LENGTH_SHORT);
                 //toast.show();
-                postGeoLocationSighting(args[0],args[1]);
+               // postGeoLocationSighting(args[0],args[1]);
+                if(!isPromotionPosted) {
+                    new HttpRequestTask().postGeoLocationSighting("RS34A", String.valueOf(args[1]));
+                }
                 isToasted=false;
+                isPromotionPosted=true;
 
                 //toast.show();
 
@@ -289,6 +294,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         protected void postGeoLocationSighting(String...args) {
+
             Promotion promo=new Promotion();
             try {
 
