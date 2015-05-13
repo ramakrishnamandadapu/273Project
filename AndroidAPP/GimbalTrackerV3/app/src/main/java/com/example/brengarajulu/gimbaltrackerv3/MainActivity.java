@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,8 @@ import org.springframework.http.converter.json.MappingJacksonHttpMessageConverte
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.w3c.dom.Text;
+
 import android.view.View.OnClickListener;
 import android.content.Intent;
 
@@ -51,8 +54,10 @@ public class MainActivity extends ActionBarActivity {
     private BeaconManager beaconManager;
     private boolean isToasted=false;
     ImageButton imgPreference;
+    Button btnShare;
     //final String getPromotionsUrl = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
     final String geoLocationUrl = "http://52.11.168.245:9000/heatmap/creategeoloc";
+    final String sendEmailUrl="http://52.8.99.113:8080/theshop/api/v1/sendmail";
     //final String url = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
 
     @Override
@@ -64,6 +69,7 @@ public class MainActivity extends ActionBarActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         addListenerOnButton();
+        addPromotionShareListener();
         // Gimbal.resetApplicationInstanceIdentifier();
         isToasted=false;
         placeEventListener = new PlaceEventListener() {
@@ -153,7 +159,6 @@ public class MainActivity extends ActionBarActivity {
     public void addListenerOnButton() {
 
         imgPreference = (ImageButton) findViewById(R.id.imgPreference);
-
         imgPreference.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -164,6 +169,52 @@ public class MainActivity extends ActionBarActivity {
             }
 
         });
+
+    }
+
+    public void addPromotionShareListener() {
+
+        btnShare = (Button) findViewById(R.id.btnShare);
+        btnShare.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                  SharePromotion();
+            }
+
+        });
+
+    }
+
+
+    private void SharePromotion()
+    {
+
+      TextView txtPromotion = (TextView) findViewById(R.id.txtCommunication);
+      TextView txtEmail = (TextView) findViewById(R.id.txtEmail);
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        ShareablePromotion promotion=new ShareablePromotion();
+        promotion.setEmail(txtEmail.getText().toString());
+        promotion.setPromotion(txtPromotion.getText().toString());
+        //requestHeaders.setContentType(new MediaType("application","json"));
+        HttpEntity<ShareablePromotion> requestEntity = new HttpEntity<ShareablePromotion>(promotion, requestHeaders);
+
+        // Create a new RestTemplate instance
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Add the Jackson and String message converters
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+        // Make the HTTP POST request, marshaling the request to JSON, and the response to a String
+        restTemplate.exchange(sendEmailUrl, HttpMethod.POST, requestEntity,null);
+
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getApplicationContext(), "Promotion Shared Successfully to"+ txtEmail.getText().toString() , duration);
+        toast.show();
+
 
     }
 
@@ -202,7 +253,7 @@ public class MainActivity extends ActionBarActivity {
             //Promotion promo=new Promotion();
             try {
 
-                final String url = "http://52.11.168.245:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
+                final String url = "http://52.8.99.113:8080/theshop/api/v1/getoffers/beaconid/"+args[0]+"/rss/"+args[1]+"?uid=ryan91";
                 Log.i("SIGHTING", url.toString());
                 RestTemplate restTemplate = new RestTemplate();
                 //restTemplate.getMessageConverters().add(new StringHttpMessageConverter());

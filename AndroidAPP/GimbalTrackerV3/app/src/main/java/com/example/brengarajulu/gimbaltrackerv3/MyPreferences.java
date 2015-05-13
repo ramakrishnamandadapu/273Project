@@ -28,12 +28,14 @@ import com.fasterxml.jackson.databind.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.*;
+import android.widget.Toast;
+
 
 public class MyPreferences extends ActionBarActivity {
 
     Button btnSave;
     Button btnHome;
-    static String updatePreferenceurl="http://52.11.168.245:8080/theshop/api/v1/updateusers/harry01";
+    static String updatePreferenceurl="http://52.8.99.113:8080/theshop/api/v1/updateusers/harry01";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,9 @@ public class MyPreferences extends ActionBarActivity {
 
                 // Make the HTTP POST request, marshaling the request to JSON, and the response to a String
                  restTemplate.exchange(updatePreferenceurl, HttpMethod.PUT, requestEntity,null);
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getApplicationContext(), "Preferences successfully updated !", duration);
+                toast.show();
                 //String result = responseEntity.getBody();
 
 

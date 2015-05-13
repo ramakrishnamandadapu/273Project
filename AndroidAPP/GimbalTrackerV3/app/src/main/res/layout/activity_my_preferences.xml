@@ -77,6 +77,7 @@
             <EditText
                 android:layout_width="279dp"
                 android:layout_height="wrap_content"
+                android:inputType="text|textCapWords|textNoSuggestions"
                 android:id="@+id/txtCustomExclusion" />
 
             <LinearLayout
