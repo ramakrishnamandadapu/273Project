@@ -16,7 +16,7 @@ public class MailHandler {
 		String[] splitMessage = messageString.split(";");
 		 
 		final String username = "cmpe273proj@gmail.com";
-		final String password = "273Projectuser";
+		final String password = "*******";
  
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
