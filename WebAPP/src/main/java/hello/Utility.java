@@ -227,7 +227,7 @@ public class Utility {
 
         List<String> listOfItems = new ArrayList<String>(Arrays.asList(getData.split(",")));
 
-        /*places += "<div class=\"table-responsive\">\n" +
+        places += "<div class=\"table-responsive\">\n" +
                 "  <table class=\"table table-striped\">\n" +
                 "    <thead>\n" +
                 "      <tr>\n" +
@@ -238,10 +238,12 @@ public class Utility {
                 "        <th>TimeSecond</th>\n" +
                 "        <th>Date</th>\n" +
                 "        <th>Time</th>\n" +
-                "        <th>Beacon</th>\n" +
-                "        <th>Time</th></th>\n" +
-                "         <th>Value</th></tr>\n" +*/
-        places += "<div class=\"table-responsive\">\n" +
+                "        <th>Beacon Id</th>\n" +
+                "        <th>No. of Sightings</th>\n" +
+                "         <th>Created At</th></tr>\n" +
+                "         <th>Leave At</th></tr>\n" +
+                //<th>No. of Sightings</th></th>\n" +
+      /*  places += "<div class=\"table-responsive\">\n" +
                 "  <table class=\"table table-striped\">\n" +
                 "    <thead>\n" +
                 "      <tr>\n" +
@@ -266,8 +268,8 @@ public class Utility {
                 places += "</td>";
             }
 
-            if(i>=6){
-                if(i==6)
+            if(i>=11){
+                if(i==11)
                     places += "<td>";
                 for(String s: keyValue){
                     if(!s.equalsIgnoreCase("value")) {
@@ -308,7 +310,7 @@ public class Utility {
                         }
                         break;*/
 
-                    case 5:
+                    case 11:
                         places += "<td>";
                         if(keyValue.size()==2)
                             places += keyValue.get(1);
@@ -339,4 +341,3 @@ public class Utility {
 
 
 }
-
