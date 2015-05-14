@@ -240,7 +240,7 @@ public class Utility {
                 "        <th>Time</th>\n" +
                 "        <th>Beacon Id</th>\n" +
                 "        <th>No. of Sightings</th>\n" +
-                "         <th>Created At</th></tr>\n" +
+                "         <th>Created At</th>\n" +
                 "         <th>Leave At</th></tr>\n" +
                 //<th>No. of Sightings</th></th>\n" +
       /*  places += "<div class=\"table-responsive\">\n" +
